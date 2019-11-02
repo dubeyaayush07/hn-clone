@@ -1,26 +1,40 @@
 import React from 'react';
-import logo from './logo.svg';
+import {
+    BrowserRouter as Router,
+    Switch, 
+    Route,
+    Link
+} from 'react-router-dom'
+import { StoryBrowse } from './components/StoryBrowse';
+import { StoryDetail } from './components/StoryDetail';
 import './App.css';
+import { Layout, Menu } from 'antd';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+const { Header, Content} = Layout;
+
+export const App = () => {
+    return (
+        <Router>
+            <Layout className="layout">
+                <Header>
+                    <Menu
+                        theme="dark"
+                        mode="horizontal"
+                        defaultSelectedKeys={['1']}
+                        style={{ lineHeight: '64px' }}
+                    >
+                        <Menu.Item key="1" style={{ fontSize : '1.2rem'}}><Link to="/">Hacker News</Link></Menu.Item>
+                    </Menu>
+                </Header>
+                <Content style={{ padding: '3rem 4rem' }}>
+                    <Switch>
+                        <Route exact path="/">
+                            <StoryBrowse />
+                        </Route>
+                        <Route path="/story/:id" children={<StoryDetail />} />
+                    </Switch>
+                </Content>
+            </Layout>
+        </Router>
+    )
 }
-
-export default App;
